@@ -71,6 +71,14 @@ This variable tells us the point of embarkation: C = Cherbourg; Q = Queenstown; 
 
 I am extremely suspicious of the same proportion of missing values in the test and training data sets. How did that happen? This could lead to some confounding. More on this later.
 
+### Survival rate for different groups
+
+In the training set, 19% of men survived while 74% of women survived.  
+In the test set, 0% of mean survived while 100% of women survived. This makes me severely question how the data was split into training and test data sets. To be honest, because of this, I do not believe that doing really well with the test data set is even possible.  
+
+In the training set, 63% of class 1, 47% of class 2 and 24% of class 3 people survived.
+In the test set, 47% of class 1, 32% of class 2 and 33% of class 3 people survived. 
+
 
 
 
