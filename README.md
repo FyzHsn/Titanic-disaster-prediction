@@ -45,20 +45,29 @@ Takes on values: male and female. No missing values for this category.
 
 I imagine this is an important variable, since children would have a higher chance of being on the boats due to societal norms. However, this column has a lot of missing values for both the training (20%) and the test sets (20%).  
 
-### 7. SibSp
+### 7. sibsp
 
-### 8. Parch
+This variable tells you the number of siblings or spouses aboard. It has no missing values.
 
-### 9. Ticket   
+### 8. parch
 
-### 10. Fare
+This variable tells you the number of parents and children on the ship. There are no missing values.
+
+### 9. ticket   
+
+Ticket number. This is a non-consequential variable and will be deleted in the preprocessing step. 
+
+### 10. fare
+
+The fare is a function of two variables that are taken account of: Point of the journey on which they got on (there were 3 steps) and cabin class. Since, this is already taken care of, I will not be using this column as well. 
 
 ### 11. cabin
 
 Not only would the cabin number most likely have a trivial effect, it also has a very high number of missing values. 77% for the training set and 78% of the test set. These columns will be deleted during the preprocessing step.
 
-### 12. Embarked
+### 12. embarked
 
+This variable tells us the point of embarkation: C = Cherbourg; Q = Queenstown; S = Southampton. I will also be deleting this variable as well.
 
 I am extremely suspicious of the same proportion of missing values in the test and training data sets. How did that happen? This could lead to some confounding. More on this later.
 
