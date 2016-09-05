@@ -102,8 +102,7 @@ from sklearn.preprocessing import Imputer
 imr = Imputer(missing_values='NaN', strategy='mean', axis=0)
 imr = imr.fit(X_train)
 X_train = imr.transform(X_train)
-
-print(X_train)
+X_test = imr.transform(X_test)
 
 
 ################################
@@ -212,27 +211,127 @@ plt.xlim([-1, X_train.shape[1]])
 plt.tight_layout()
 plt.show()                                       
 
-# Use the sequential backwards selection algorithm.
+# Standardize data before fitting - I am not sure what it would do to 
+# standardize the male female and passenger class data.
+# It would have made sense to use the StandardScaler function from the 
+# sklearn.preprocessing module but it leads to some issues. So, I will only
+# normalize the age data which has a pretty big spread.
+X_train_std = X_train
+X_test_std = X_test
+X_test_std[:, 1] = (X_test[:, 1]-X_test[:, 1].mean())/X_test[:, 1].std() 
+X_train_std[:, 1] = (X_train[:, 1]-X_train[:, 1].mean())/X_train[:, 1].std()
+
+# Use the sequential backwards selection algorithm - in conjucntion with k
+# nearest neighbors classifier.
 from SBS import SBS
 
+# knn classifier
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=2)
+
+sbs = SBS(knn, k_features=1)
+sbs.fit(X_train_std, y_train)
+
+# Plot of feature importances - using knn classifier
+k_feat = [len(k) for k in sbs.subsets_]
+plt.plot(k_feat, sbs.scores_, marker='o')
+plt.ylabel('Prediction accuracy')
+plt.xlabel('Number of features')
+plt.grid()
+plt.title('Sequential Backward Selection using \n knn classifier')
+plt.show()
+
+# Support vector machine - algorithm
+from sklearn.svm import SVC
+svm = SVC(kernel='linear', C=1.0, random_state=0)
+
+sbs = SBS(svm, k_features=1)
+sbs.fit(X_train_std, y_train)
+
+# Plot of feature importances - using support vector machine classifier
+k_feat = [len(k) for k in sbs.subsets_]
+plt.plot(k_feat, sbs.scores_, marker='o')
+plt.ylabel('Prediction accuracy')
+plt.xlabel('Number of features')
+plt.grid()
+plt.title('Sequential Backward Selection using \n support vector machine')
+plt.show()
+
+# Feature importance using L1 normalization and the Logistic regression
+from sklearn.linear_model import LogisticRegression
+
+fig = plt.figure()
+ax = plt.subplot(111)
+colors = ['blue', 'green', 'red', 'cyan', 'magenta', 'yellow']
+
+weights, params = [], []
+for c in np.arange(-4, 6):
+    lr = LogisticRegression(penalty='l1', C=10**c, random_state=0)
+    lr.fit(X_train_std, y_train)
+    weights.append(lr.coef_[0])
+    params.append(10**c)
+weights = np.array(weights)
+for column, color in zip(range(weights.shape[1]), colors):
+    plt.plot(params, weights[:, column],
+             label=feat_labels[column],
+             color=color)
+plt.axhline(0, color='black', linestyle='--', linewidth=3)
+plt.xlim([10**(-5), 10**5])
+plt.ylabel('weight coefficient')
+plt.xlabel('C')             
+plt.xscale('log')
+plt.legend(loc='upper left')
+ax.legend(loc='upper center',
+          bbox_to_anchor=(1.38, 1.03),
+ncol=1, fancybox=True)             
+plt.show()             
+
+####################################################
+# 5. PREDICTIONS USING MACHINE LEARNING ALGORITHMS #
+####################################################
+
+# Logistic Regression
+print('Logistic Regression')
+lr = LogisticRegression(penalty='l1', C=0.1, random_state=0)
+lr.fit(X_train_std, y_train)
+print('Training accuracy: ', lr.score(X_train_std, y_train))
+print('Test accuracy: ', lr.score(X_test_std, y_test))
+
+# Support Vector Machines
+print('Support Vector Machines')
+svm = SVC(kernel='linear', C=1.0, random_state=0)
+svm.fit(X_train_std, y_train)
+print('Training accuracy: ', svm.score(X_train_std, y_train))
+print('Test accuracy: ', svm.score(X_test_std, y_test))
+
+# Decision Tree Learning
+from sklearn.tree import DecisionTreeClassifier
+tree = DecisionTreeClassifier(criterion='entropy', max_depth=4, random_state=0)
+tree.fit(X_train, y_train)
+
+print('Decision Tree Learning')
+print('Training accuracy: ', tree.score(X_train, y_train))
+print('Test accuracy: ', tree.score(X_test, y_test))
 
 
+# Random Forest Classifier
+forest = RandomForestClassifier(criterion='entropy',
+                                n_estimators=10,
+                                random_state=1,
+                                n_jobs=2)
+forest.fit(X_train, y_train)                                
+print('Random Forests')
+print('Training accuracy: ', forest.score(X_train, y_train))
+print('Test accuracy: ', forest.score(X_test, y_test))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# SGD classifier
+from sklearn.linear_model import SGDClassifier
+ppn = SGDClassifier(penalty='elasticnet', loss='perceptron', n_iter=100,
+                    learning_rate='optimal', random_state=0, alpha=0.001)
+ppn.fit(X_train_std, y_train)
+print('Perceptron')
+print('Training accuracy: ', ppn.score(X_train_std, y_train))
+print('Test accuracy: ', ppn.score(X_test_std, y_test))
 
 
 
