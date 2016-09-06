@@ -79,6 +79,9 @@ In the test set, 0% of mean survived while 100% of women survived. This makes me
 In the training set, 63% of class 1, 47% of class 2 and 24% of class 3 people survived.
 In the test set, 47% of class 1, 32% of class 2 and 33% of class 3 people survived. 
 
-
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_random_forest.png?raw=true)  
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_l1norm.png?raw=true)  
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_SBS_svm.png?raw=true)  
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_SBS_knn.png?raw=true)  
 
 
