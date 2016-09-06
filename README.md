@@ -84,4 +84,5 @@ In the test set, 47% of class 1, 32% of class 2 and 33% of class 3 people surviv
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_SBS_svm.png?raw=true)  
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_SBS_knn.png?raw=true)  
 
+![](?raw=true)
 
