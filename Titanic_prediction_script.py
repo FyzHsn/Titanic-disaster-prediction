@@ -201,7 +201,7 @@ for f in range(X_train.shape[1]):
                                        
 # Plot the relative importances - Picture worth a thousand words
 import matplotlib.pyplot as plt
-plt.title('Titanic Survival Feature Importance')
+plt.title('Titanic Survival Feature Importance \n using Random Forests')
 plt.bar(range(X_train.shape[1]),
         importances[indices],
         color='lightblue',
@@ -209,7 +209,9 @@ plt.bar(range(X_train.shape[1]),
 plt.xticks(range(X_train.shape[1]), feat_labels[indices], rotation=90)
 plt.xlim([-1, X_train.shape[1]])
 plt.tight_layout()
-plt.show()                                       
+#plt.savefig(r'C:\Users\Windows\Dropbox\AllStuff\Titanic_Kaggle\Figs\Feat_importance_random_forest.png')
+#plt.clf()              
+plt.show()
 
 # Standardize data before fitting - I am not sure what it would do to 
 # standardize the male female and passenger class data.
@@ -239,6 +241,8 @@ plt.ylabel('Prediction accuracy')
 plt.xlabel('Number of features')
 plt.grid()
 plt.title('Sequential Backward Selection using \n knn classifier')
+#plt.savefig(r'C:\Users\Windows\Dropbox\AllStuff\Titanic_Kaggle\Figs\Feat_importance_SBS_knn.png')
+#plt.clf()   
 plt.show()
 
 # Support vector machine - algorithm
@@ -255,6 +259,8 @@ plt.ylabel('Prediction accuracy')
 plt.xlabel('Number of features')
 plt.grid()
 plt.title('Sequential Backward Selection using \n support vector machine')
+#plt.savefig(r'C:\Users\Windows\Dropbox\AllStuff\Titanic_Kaggle\Figs\Feat_importance_SBS_svm.png')
+#plt.clf()
 plt.show()
 
 # Feature importance using L1 normalization and the Logistic regression
@@ -283,7 +289,9 @@ plt.xscale('log')
 plt.legend(loc='upper left')
 ax.legend(loc='upper center',
           bbox_to_anchor=(1.38, 1.03),
-ncol=1, fancybox=True)             
+ncol=1, fancybox=True)  
+#plt.savefig(r'C:\Users\Windows\Dropbox\AllStuff\Titanic_Kaggle\Figs\Feat_importance_l1norm.png', bbox_inches='tight')
+#plt.clf()           
 plt.show()             
 
 ####################################################
@@ -318,7 +326,7 @@ print('Test accuracy: ', tree.score(X_test, y_test))
 forest = RandomForestClassifier(criterion='entropy',
                                 n_estimators=10,
                                 random_state=1,
-                                n_jobs=2)
+                                n_jobs=-1)
 forest.fit(X_train, y_train)                                
 print('Random Forests')
 print('Training accuracy: ', forest.score(X_train, y_train))
@@ -333,17 +341,50 @@ print('Perceptron')
 print('Training accuracy: ', ppn.score(X_train_std, y_train))
 print('Test accuracy: ', ppn.score(X_test_std, y_test))
 
+# Construct table to display test and training results. 
+lrtrainscore = lr.score(X_train_std, y_train)
+svmtrainscore = svm.score(X_train_std, y_train)
+treetrainscore = tree.score(X_train_std, y_train)
+foresttrainscore = forest.score(X_train_std, y_train)
+ppntrainscore =  ppn.score(X_train_std, y_train)
 
+lrtestscore = lr.score(X_test_std, y_test)
+svmtestscore = svm.score(X_test_std, y_test)
+treetestscore = tree.score(X_test_std, y_test)
+foresttestscore = forest.score(X_test_std, y_test)
+ppntestscore =  ppn.score(X_test_std, y_test)
 
+algorithmdf = pd.DataFrame([
+                    ['Logistic regression', round(lrtrainscore*100, 2), 
+                     round(lrtestscore*100, 2)],
+                    ['Support vector machine', round(svmtrainscore*100, 2), 
+                     round(svmtestscore*100, 2)],
+                    ['Decision tree', round(treetrainscore*100, 2), 
+                     round(treetestscore*100, 2)],
+                    ['Random Forests', round(foresttrainscore*100, 2), 
+                     round(foresttestscore*100, 2)],
+                    ['Perceptron', round(ppntrainscore*100, 2), 
+                     round(ppntestscore*100, 2)]])   
 
+algorithmdf.columns = ['Algorithm name', 'Train score (%)', 'Test score (%)']
+                       
+# Construct table of results
+from pandas.tools.plotting import table
+fig, ax = plt.subplots(figsize=(12, 2)) # set size frame
+ax.xaxis.set_visible(False)  # hide the x axis
+ax.yaxis.set_visible(False)  # hide the y axis
+ax.set_frame_on(False)  # no visible frame, uncomment if size is ok
+tabla = table(ax, algorithmdf, loc='upper right', 
+              colWidths=[0.21]*len(algorithmdf.columns))  
+tabla.auto_set_font_size(False) # Activate set fontsize manually
+tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
+tabla.scale(1.2, 1.2) # change size table
+plt.savefig('performance_table.png')
+plt.clf()
 
-
-
-
-
-
-
-
+###################################
+# 5. PRINCIPAL COMPONENT ANALYSIS #
+###################################
 
 
 
