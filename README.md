@@ -79,10 +79,17 @@ In the test set, 0% of mean survived while 100% of women survived. This makes me
 In the training set, 63% of class 1, 47% of class 2 and 24% of class 3 people survived.
 In the test set, 47% of class 1, 32% of class 2 and 33% of class 3 people survived. 
 
+Using the random forest approach we find the importance of features.  
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_random_forest.png?raw=true)  
+
+The l1 norm regularization approach can also be used to look at the importance of features as well by checking the sparseness of the weight coefficients.  
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_l1norm.png?raw=true)  
+
+The sequential backward selection algorithm is a third approach to finding out the important features to select. Using intuitive ideas, however, I have already done the feature selection.  
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_SBS_svm.png?raw=true)  
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/Feat_importance_SBS_knn.png?raw=true)  
+
+In the table below, we show the performance of each model on the test sets. Of course, this is a very rudimentary arrangement. For a careful appraisal of the training models, the training data set needs to be broken down further into a validation set and the training set. Then, based on the performance on the validation set, we can pick the superior model and apply it to the test dataset. We will utilize these subtlers method later.
 
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table.png?raw=true)
 
