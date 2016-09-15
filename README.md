@@ -93,3 +93,34 @@ In the table below, we show the performance of each model on the test sets. Of c
 
 ![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table.png?raw=true)
 
+Principal component analysis (PCA)
+----------------------------------
+
+Unsupervised data compression.
+Another non-linear variation is the kernel proncipal component analysis.
+
+Linear discriminant analysis (LDA)
+----------------------------------
+
+Supervised dimensionality reduction technique for maximum class separability.
+
+Model evaluation and hyperparameter tuning
+==========================================
+
+Cross-validation to assess performance
+--------------------------------------
+
+Learning and validation curves
+------------------------------
+
+Tuning ML algorithms via grid search
+------------------------------------
+
+Other performance metrics
+-------------------------
+
+Ensemble learning
+=================
+
+Deep learning
+=============
