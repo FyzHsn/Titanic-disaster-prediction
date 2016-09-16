@@ -98,11 +98,14 @@ Principal component analysis (PCA)
 
 Unsupervised data compression.
 Another non-linear variation is the kernel proncipal component analysis.
+PCA doesn't improve the performance. The features that I have kept already are optimal.  
 
 Linear discriminant analysis (LDA)
 ----------------------------------
 
-Supervised dimensionality reduction technique for maximum class separability.
+Supervised dimensionality reduction technique for maximum class separability. This leads to better performance of the codes and reduces overfitting.  
+
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_LDA.png?raw=true)
 
 Model evaluation and hyperparameter tuning
 ==========================================
