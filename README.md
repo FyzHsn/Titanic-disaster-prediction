@@ -105,7 +105,9 @@ Linear discriminant analysis (LDA)
 
 Supervised dimensionality reduction technique for maximum class separability. This leads to better performance of the codes and reduces overfitting.  
 
-![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_LDA.png?raw=true)
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_LDA.png?raw=true)  
+
+With a few exceptions, LDA usually performs better than PCA. If a class contains a small number of samples, PCA according to A. M. Martinez performs better in the context of image recognition. 
 
 Model evaluation and hyperparameter tuning
 ==========================================
