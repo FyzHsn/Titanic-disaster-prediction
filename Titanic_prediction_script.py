@@ -379,12 +379,228 @@ tabla = table(ax, algorithmdf, loc='upper right',
 tabla.auto_set_font_size(False) # Activate set fontsize manually
 tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
 tabla.scale(1.2, 1.2) # change size table
-plt.savefig('performance_table.png')
-plt.clf()
+#plt.savefig('performance_table.png')
+#plt.clf()
+plt.show()
 
 ###################################
 # 5. PRINCIPAL COMPONENT ANALYSIS #
 ###################################
+
+# compute the covariance matrix
+cov_mat = np.cov(X_train_std.T)
+eigen_vals, eigen_vecs = np.linalg.eig(cov_mat)
+print('\nEigenvalues \n%s' % eigen_vals)
+
+# we plot the variance explained by eigenvalues
+tot = sum(eigen_vals)
+var_exp = [(i/tot) for i in sorted(eigen_vals, reverse=True)]
+cum_var_exp = np.cumsum(var_exp)
+
+plt.bar(range(0, len(eigen_vals)), var_exp, alpha=0.5, align='center',
+        label='individual explained variance')
+plt.step(range(0, len(eigen_vals)), cum_var_exp, where='mid',
+         label='cumulative explained variance')
+plt.ylabel('Explained variance ratio')
+plt.xlabel('Principal components')
+plt.show()         
+
+# applying PCA in scikit-learn
+from sklearn.decomposition import PCA
+lr = LogisticRegression()
+for compnum in range(1, X_train.shape[1]):
+    pca = PCA(n_components=compnum)
+    X_train_pca = pca.fit_transform(X_train_std)
+    X_test_pca = pca.transform(X_test_std)
+    lr.fit(X_train_pca, y_train)
+    print('PCA test score: ', lr.score(X_test_pca, y_test))
+    
+# variance explained ratio via scikit-learn
+pca = PCA(n_components=None)
+X_train_pca = pca.fit_transform(X_train_std)
+print(pca.explained_variance_ratio_)
+
+###################################
+# 6. LINEAR DISCRIMINANT ANALYSIS #
+###################################
+
+# linear discriminant analysis (LDA) vs scikit-learn
+from sklearn.lda import LDA
+lr = LogisticRegression()
+for compnum in range(1, X_train.shape[1]):
+    lda = LDA(n_components=compnum)
+    X_train_lda = lda.fit_transform(X_train_std, y_train)
+    X_test_lda = lda.transform(X_test_std)
+    lr.fit(X_train_lda, y_train)
+    print('LDA test score: ', lr.score(X_test_lda, y_test))
+
+"""
+Unlike PCA, LDA still leads to an improvement in performance despite having
+removed misleading variables. Hence, let us apply it to the other algorithms as
+well.
+
+"""    
+    
+# Logistic Regression
+print('Logistic Regression')
+lr = LogisticRegression(penalty='l1', C=0.1, random_state=0)
+lr.fit(X_train_lda, y_train)
+print('Training accuracy: ', lr.score(X_train_lda, y_train))
+print('Test accuracy: ', lr.score(X_test_lda, y_test))
+
+# Support Vector Machines
+print('Support Vector Machines')
+svm = SVC(kernel='linear', C=1.0, random_state=0)
+svm.fit(X_train_lda, y_train)
+print('Training accuracy: ', svm.score(X_train_lda, y_train))
+print('Test accuracy: ', svm.score(X_test_lda, y_test))
+
+# Decision Tree Learning
+from sklearn.tree import DecisionTreeClassifier
+tree = DecisionTreeClassifier(criterion='entropy', max_depth=4, random_state=0)
+tree.fit(X_train_lda, y_train)
+
+print('Decision Tree Learning')
+print('Training accuracy: ', tree.score(X_train_lda, y_train))
+print('Test accuracy: ', tree.score(X_test_lda, y_test))
+
+
+# Random Forest Classifier
+forest = RandomForestClassifier(criterion='entropy',
+                                n_estimators=10,
+                                random_state=1,
+                                n_jobs=-1)
+forest.fit(X_train_lda, y_train)                                
+print('Random Forests')
+print('Training accuracy: ', forest.score(X_train_lda, y_train))
+print('Test accuracy: ', forest.score(X_test_lda, y_test))
+
+# SGD classifier
+from sklearn.linear_model import SGDClassifier
+ppn = SGDClassifier(penalty='elasticnet', loss='perceptron', n_iter=100,
+                    learning_rate='optimal', random_state=0, alpha=0.001)
+ppn.fit(X_train_lda, y_train)
+print('Perceptron')
+print('Training accuracy: ', ppn.score(X_train_lda, y_train))
+print('Test accuracy: ', ppn.score(X_test_lda, y_test))
+
+# Construct table to display test and training results. 
+lrtrainscore = lr.score(X_train_lda, y_train)
+svmtrainscore = svm.score(X_train_lda, y_train)
+treetrainscore = tree.score(X_train_lda, y_train)
+foresttrainscore = forest.score(X_train_lda, y_train)
+ppntrainscore =  ppn.score(X_train_lda, y_train)
+
+lrtestscore = lr.score(X_test_lda, y_test)
+svmtestscore = svm.score(X_test_lda, y_test)
+treetestscore = tree.score(X_test_lda, y_test)
+foresttestscore = forest.score(X_test_lda, y_test)
+ppntestscore =  ppn.score(X_test_lda, y_test)
+
+algorithmdf = pd.DataFrame([
+                    ['Logistic regression', round(lrtrainscore*100, 2), 
+                     round(lrtestscore*100, 2)],
+                    ['Support vector machine', round(svmtrainscore*100, 2), 
+                     round(svmtestscore*100, 2)],
+                    ['Decision tree', round(treetrainscore*100, 2), 
+                     round(treetestscore*100, 2)],
+                    ['Random Forests', round(foresttrainscore*100, 2), 
+                     round(foresttestscore*100, 2)],
+                    ['Perceptron', round(ppntrainscore*100, 2), 
+                     round(ppntestscore*100, 2)]])   
+
+algorithmdf.columns = ['Algorithm name', 'Train score (%)', 'Test score (%)']
+                       
+# Construct table of results
+from pandas.tools.plotting import table
+fig, ax = plt.subplots(figsize=(12, 2)) # set size frame
+ax.xaxis.set_visible(False)  # hide the x axis
+ax.yaxis.set_visible(False)  # hide the y axis
+ax.set_frame_on(False)  # no visible frame, uncomment if size is ok
+tabla = table(ax, algorithmdf, loc='upper right', 
+              colWidths=[0.21]*len(algorithmdf.columns))  
+tabla.auto_set_font_size(False) # Activate set fontsize manually
+tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
+tabla.scale(1.2, 1.2) # change size table
+#plt.savefig('performance_table_LDA.png')
+#plt.clf()
+plt.show()    
+
+
+#########################################
+# 7. K-FOLD STRATIFIED CROSS-VALIDATION #
+#########################################
+
+# Pipeline module
+from sklearn.pipeline import Pipeline
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
