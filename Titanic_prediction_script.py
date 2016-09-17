@@ -531,15 +531,86 @@ plt.show()
 # 7. K-FOLD STRATIFIED CROSS-VALIDATION #
 #########################################
 
-# Pipeline module
+# Pipeline + stratified K fold module
 from sklearn.pipeline import Pipeline
+from sklearn.cross_validation import StratifiedKFold
+from sklearn.preprocessing import StandardScaler
+from sklearn.cross_validation import cross_val_score
 
+lr = LogisticRegression(penalty='l1', C=0.1, random_state=0)
+lr.fit(X_train_lda, y_train)
+lr_scores = cross_val_score(estimator=lr,
+                            X=X_train_lda,
+                            y=y_train,
+                            cv=15)
 
+svm = SVC(kernel='linear', C=1.0, random_state=0)
+svm.fit(X_train_lda, y_train)                         
+svm_scores = cross_val_score(estimator=svm,
+                             X=X_train_lda,
+                             y=y_train,
+                             cv=15)
+                         
+tree = DecisionTreeClassifier(criterion='entropy', max_depth=4, random_state=0)
+tree.fit(X_train_lda, y_train)
+tree_scores = cross_val_score(estimator=tree,
+                              X=X_train_lda,
+                              y=y_train,
+                              cv=15)
+                         
+forest = RandomForestClassifier(criterion='entropy',
+                                n_estimators=10,
+                                random_state=1,
+                                n_jobs=-1)
+forest.fit(X_train_lda, y_train)   
+forest_scores = cross_val_score(estimator=forest,
+                                X=X_train_lda,
+                                y=y_train,
+                                cv=15)
+                                            
+ppn = SGDClassifier(penalty='elasticnet', loss='perceptron', n_iter=100,
+                    learning_rate='optimal', random_state=0, alpha=0.001)
+ppn.fit(X_train_lda, y_train)
+ppn_scores = cross_val_score(estimator=ppn,
+                             X=X_train_lda,
+                             y=y_train,
+                             cv=15)
+                                                 
+# table of cross-validated scores
+algorithmdf = pd.DataFrame([
+                    ['Logistic regression', 
+                     round(np.mean(lr_scores)*100, 2),
+                     round(np.std(lr_scores)*100, 2)],
+                    ['Support vector machine', 
+                     round(np.mean(svm_scores)*100, 2),
+                     round(np.std(svm_scores)*100, 2)],
+                    ['Decision tree', 
+                     round(np.mean(tree_scores)*100, 2),
+                     round(np.std(tree_scores)*100, 2)],
+                    ['Random Forests', 
+                     round(np.mean(forest_scores)*100, 2),
+                     round(np.std(forest_scores)*100, 2)],
+                    ['Perceptron', 
+                     round(np.mean(ppn_scores)*100, 2),
+                     round(np.std(ppn_scores)*100, 2)]])   
 
-
-
-
-
+algorithmdf.columns = ['Algorithm name', 'Train score mean (%)', 
+                       'Train score sd (%)']
+                       
+# Construct table of results
+from pandas.tools.plotting import table
+fig, ax = plt.subplots(figsize=(12, 2)) # set size frame
+ax.xaxis.set_visible(False)  # hide the x axis
+ax.yaxis.set_visible(False)  # hide the y axis
+ax.set_frame_on(False)  # no visible frame, uncomment if size is ok
+tabla = table(ax, algorithmdf, loc='upper right', 
+              colWidths=[0.21]*len(algorithmdf.columns))  
+tabla.auto_set_font_size(False) # Activate set fontsize manually
+tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
+tabla.scale(1.2, 1.2) # change size table
+plt.savefig('performance_table_Cross_Validation.png')
+plt.clf()
+#plt.show()                                                 
 
 
 
