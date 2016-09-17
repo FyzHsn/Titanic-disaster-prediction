@@ -115,6 +115,11 @@ Model evaluation and hyperparameter tuning
 Cross-validation to assess performance
 --------------------------------------
 
+Here is a fantastic case for using cross-validation methods. Whereas previously Random Forests had the highest training score combined with the lowest test score, using cross-validation, we find that Random Forests perform the worst. 
+
+Support vector machines or Logistic regression are the best performers according to the cross-validation scores.  
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_Cross_Validation.png?raw=true)   
+
 Learning and validation curves
 ------------------------------
 
@@ -129,3 +134,18 @@ Ensemble learning
 
 Deep learning
 =============
+
+Data Analysis Steps
+===================
+
+1. Clean and pre-process data sets.   
+2. Feature selection + transformation.    
+      * Study the importance of each feature.   
+      * Study the effect of LDA.   
+      * Using a combination of feature selection and transformation, process the features of the data-set.   
+3. Use cross-validation to find the performance of various algorithms on the dataset in the classification task.    
+
+
+
+
+
