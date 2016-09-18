@@ -123,6 +123,14 @@ Support vector machines or Logistic regression are the best performers according
 Learning and validation curves
 ------------------------------
 
+As can be seen in the following table, I was able to improve the performance of one of the algorithms using validation curves to tune the parameters. Playing with the maximum depth of Random Forest Classifier, I was able to improve its classification accuracy while avoiding overfitting. At the present moment, this algorithm with the parameters is the best classifier. 
+
+forest = RandomForestClassifier(criterion='entropy',
+                                n_estimators=10,
+                                max_depth=4,
+                                random_state=1,
+                                n_jobs=-1)
+
 Tuning ML algorithms via grid search
 ------------------------------------
 
