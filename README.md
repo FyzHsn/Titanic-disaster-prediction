@@ -118,7 +118,7 @@ Cross-validation to assess performance
 Here is a fantastic case for using cross-validation methods. Whereas previously Random Forests had the highest training score combined with the lowest test score, using cross-validation, we find that Random Forests perform the worst. 
 
 Support vector machines or Logistic regression are the best performers according to the cross-validation scores.  
-![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_Cross_Validation.png?raw=true)   
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_Cross_Validation.png?raw=true)    
 
 Learning and validation curves
 ------------------------------
@@ -130,6 +130,8 @@ forest = RandomForestClassifier(criterion='entropy',
                                 max_depth=4,
                                 random_state=1,
                                 n_jobs=-1)
+
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_parameter_tuned.png?raw=true)  
 
 Tuning ML algorithms via grid search
 ------------------------------------
