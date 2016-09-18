@@ -622,11 +622,11 @@ from sklearn.learning_curve import validation_curve
 param_range = [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
 max_depth = [3, 4, 5, 6, 7, 8]
 n_estimators = [5, 10, 15, 20, 25, 30]
-train_scores, test_scores = validation_curve(estimator=RandomForestClassifier(),
+train_scores, test_scores = validation_curve(estimator=LogisticRegression(),
                                              X=X_train_lda,
                                              y=y_train,
-                                             param_name='max_depth',
-                                             param_range=max_depth,
+                                             param_name='C',
+                                             param_range=param_range,
                                              cv=10)
 train_mean = np.mean(train_scores, axis=1)
 train_std = np.std(train_scores, axis=1)
@@ -653,19 +653,19 @@ plt.xscale('log')
 plt.legend(loc='lower right')
 plt.xlabel('Parameter C')
 plt.ylabel('Accuracy')
-plt.ylabel([0.7, 1.0])
+plt.ylim([0.7, 1.0])
 plt.show()         
 
 
 # performance for tuned algorithms
-lr = LogisticRegression(penalty='l1', C=0.01, random_state=0)
+lr = LogisticRegression(penalty='l1', C=0.1, random_state=0)
 lr.fit(X_train_lda, y_train)
 lr_scores = cross_val_score(estimator=lr,
                             X=X_train_lda,
                             y=y_train,
                             cv=15)
 
-svm = SVC(kernel='linear', C=0.01, random_state=0)
+svm = SVC(kernel='linear', C=1.0, random_state=0)
 svm.fit(X_train_lda, y_train)                         
 svm_scores = cross_val_score(estimator=svm,
                              X=X_train_lda,
