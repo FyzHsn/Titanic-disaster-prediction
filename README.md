@@ -136,14 +136,19 @@ forest = RandomForestClassifier(criterion='entropy',
 Tuning ML algorithms via grid search
 ------------------------------------
 
-Other performance metrics
--------------------------
 
 Ensemble learning
 =================
 
-Deep learning
-=============
+Majority voting
+---------------
+
+Bagging
+-------
+
+Adaptive boosting
+-----------------
+
 
 Data Analysis Steps
 ===================
@@ -151,9 +156,16 @@ Data Analysis Steps
 1. Clean and pre-process data sets.   
 2. Feature selection + transformation.    
       * Study the importance of each feature.   
-      * Study the effect of LDA.   
+      * Study the effect of LDA.    
       * Using a combination of feature selection and transformation, process the features of the data-set.   
-3. Use cross-validation to find the performance of various algorithms on the dataset in the classification task.    
+3. Use cross-validation to find the performance of various algorithms on the dataset in the classification task:    
+      * Perceptron, adaline, logistic regression, support vector machine, decision tree learning.  
+      * Ensemble learning via majority voting, bagging or boosting.   
+4. Tune hyper-parameters via grid search.    
+5. Voila, you have your model. After running through test sets, feed it into the training algorithm.  
+
+
+Remember that use to test set to only conclude if the data is being overfit or underfit. Use cross-validation to choose optimally performing algorithm.   
 
 
 
