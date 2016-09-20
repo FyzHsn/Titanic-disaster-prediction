@@ -136,6 +136,9 @@ forest = RandomForestClassifier(criterion='entropy',
 Tuning ML algorithms via grid search
 ------------------------------------
 
+Using the grid search algorithm, we find further improvements to the SVC and Logistic regression algorithms.  
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/performance_table_grid_search.png?raw=true)    
+The logistic regression variance decreased while the svm accuracy increased in addition to a decreament of variance.  
 
 Ensemble learning
 =================
