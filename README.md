@@ -1,6 +1,13 @@
 Titanic-disaster-prediction
 ===========================
 
+Summary
+-------
+
+Let us begin with the summary of results. The following plot shows the various algorithms that have been optimized for the task of predicting survival during the Titanic disaster.  
+
+![](?raw=true)
+
 In this script, we predict the survivability in the Titanic disaster based on features such as gender, ticket class, family status etc. This is part of a kaggle competition.
 
 1. We load the test and training data sets from the kaggle website.  
@@ -141,36 +148,6 @@ Using the grid search algorithm, we find further improvements to the SVC and Log
 The logistic regression variance decreased while the svm accuracy increased in addition to a decreament of variance.  
 
 Ensemble learning
-=================
-
-Majority voting
----------------
-
-Bagging
--------
-
-Adaptive boosting
 -----------------
 
-
-Data Analysis Steps
-===================
-
-1. Clean and pre-process data sets.   
-2. Feature selection + transformation.    
-      * Study the importance of each feature.   
-      * Study the effect of LDA.    
-      * Using a combination of feature selection and transformation, process the features of the data-set.   
-3. Use cross-validation to find the performance of various algorithms on the dataset in the classification task:    
-      * Perceptron, adaline, logistic regression, support vector machine, decision tree learning.  
-      * Ensemble learning via majority voting, bagging or boosting.   
-4. Tune hyper-parameters via grid search.    
-5. Voila, you have your model. After running through test sets, feed it into the training algorithm.  
-
-
-Remember that use to test set to only conclude if the data is being overfit or underfit. Use cross-validation to choose optimally performing algorithm.   
-
-
-
-
-
+Neither majority voting nor bagging seems to further improv performance. I have been unable to break the 83% mark in terms of performance. 
