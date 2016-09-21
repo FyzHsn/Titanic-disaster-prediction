@@ -904,15 +904,43 @@ plt.show()
 
 
 
-#############################################
-# 12. ENSEMBLE LEARNING - ADAPTIVE BOOSTING #
-#############################################
+#######################################
+# 12. FINAL ALGORITHM COMPARISON PLOT #
+#######################################
 
+# prepare configuration for cross validation test
+num_folds = 10
 
+# prepare models
+models = []
+models.append(('LR', lr))
+models.append(('SVM', svm))
+models.append(('DT', tree))
+models.append(('RF', forest))
+models.append(('PPN', ppn))
+models.append(('MVC', my_clf))
+models.append(('BAG', bag))
 
+# evaluate each model
+results = []
+names = []
+scoring = 'accuracy'
+for name, model in models:
+    cv_results = cross_val_score(estimator=model,
+                                 X=X_train_lda,
+                                 y=y_train,
+                                 cv=num_folds)
+    results.append(cv_results)
+    names.append(name)                                 
 
-
-
+fig = plt.figure()
+ax = fig.add_subplot(111)
+plt.boxplot(results)
+ax.set_xticklabels(names)
+plt.title('Algorithm Comparison')
+plt.ylim([0.6, 0.95])
+plt.savefig('AlgorithmComparison.png')
+plt.clf()
 
 
 
