@@ -298,90 +298,90 @@ plt.show()
 # 5. PREDICTIONS USING MACHINE LEARNING ALGORITHMS #
 ####################################################
 
-# Logistic Regression
-print('Logistic Regression')
-lr = LogisticRegression(penalty='l1', C=0.1, random_state=0)
-lr.fit(X_train_std, y_train)
-print('Training accuracy: ', lr.score(X_train_std, y_train))
-print('Test accuracy: ', lr.score(X_test_std, y_test))
-
-# Support Vector Machines
-print('Support Vector Machines')
-svm = SVC(kernel='linear', C=1.0, random_state=0)
-svm.fit(X_train_std, y_train)
-print('Training accuracy: ', svm.score(X_train_std, y_train))
-print('Test accuracy: ', svm.score(X_test_std, y_test))
-
-# Decision Tree Learning
-from sklearn.tree import DecisionTreeClassifier
-tree = DecisionTreeClassifier(criterion='entropy', max_depth=4, random_state=0)
-tree.fit(X_train, y_train)
-
-print('Decision Tree Learning')
-print('Training accuracy: ', tree.score(X_train, y_train))
-print('Test accuracy: ', tree.score(X_test, y_test))
-
-
-# Random Forest Classifier
-forest = RandomForestClassifier(criterion='entropy',
-                                n_estimators=10,
-                                random_state=1,
-                                n_jobs=-1)
-forest.fit(X_train, y_train)                                
-print('Random Forests')
-print('Training accuracy: ', forest.score(X_train, y_train))
-print('Test accuracy: ', forest.score(X_test, y_test))
-
-# SGD classifier
-from sklearn.linear_model import SGDClassifier
-ppn = SGDClassifier(penalty='elasticnet', loss='perceptron', n_iter=100,
-                    learning_rate='optimal', random_state=0, alpha=0.001)
-ppn.fit(X_train_std, y_train)
-print('Perceptron')
-print('Training accuracy: ', ppn.score(X_train_std, y_train))
-print('Test accuracy: ', ppn.score(X_test_std, y_test))
-
-# Construct table to display test and training results. 
-lrtrainscore = lr.score(X_train_std, y_train)
-svmtrainscore = svm.score(X_train_std, y_train)
-treetrainscore = tree.score(X_train_std, y_train)
-foresttrainscore = forest.score(X_train_std, y_train)
-ppntrainscore =  ppn.score(X_train_std, y_train)
-
-lrtestscore = lr.score(X_test_std, y_test)
-svmtestscore = svm.score(X_test_std, y_test)
-treetestscore = tree.score(X_test_std, y_test)
-foresttestscore = forest.score(X_test_std, y_test)
-ppntestscore =  ppn.score(X_test_std, y_test)
-
-algorithmdf = pd.DataFrame([
-                    ['Logistic regression', round(lrtrainscore*100, 2), 
-                     round(lrtestscore*100, 2)],
-                    ['Support vector machine', round(svmtrainscore*100, 2), 
-                     round(svmtestscore*100, 2)],
-                    ['Decision tree', round(treetrainscore*100, 2), 
-                     round(treetestscore*100, 2)],
-                    ['Random Forests', round(foresttrainscore*100, 2), 
-                     round(foresttestscore*100, 2)],
-                    ['Perceptron', round(ppntrainscore*100, 2), 
-                     round(ppntestscore*100, 2)]])   
-
-algorithmdf.columns = ['Algorithm name', 'Train score (%)', 'Test score (%)']
-                       
-# Construct table of results
-from pandas.tools.plotting import table
-fig, ax = plt.subplots(figsize=(12, 2)) # set size frame
-ax.xaxis.set_visible(False)  # hide the x axis
-ax.yaxis.set_visible(False)  # hide the y axis
-ax.set_frame_on(False)  # no visible frame, uncomment if size is ok
-tabla = table(ax, algorithmdf, loc='upper right', 
-              colWidths=[0.21]*len(algorithmdf.columns))  
-tabla.auto_set_font_size(False) # Activate set fontsize manually
-tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
-tabla.scale(1.2, 1.2) # change size table
-#plt.savefig('performance_table.png')
-#plt.clf()
-plt.show()
+## Logistic Regression
+#print('Logistic Regression')
+#lr = LogisticRegression(penalty='l1', C=0.1, random_state=0)
+#lr.fit(X_train_std, y_train)
+#print('Training accuracy: ', lr.score(X_train_std, y_train))
+#print('Test accuracy: ', lr.score(X_test_std, y_test))
+#
+## Support Vector Machines
+#print('Support Vector Machines')
+#svm = SVC(kernel='linear', C=1.0, random_state=0)
+#svm.fit(X_train_std, y_train)
+#print('Training accuracy: ', svm.score(X_train_std, y_train))
+#print('Test accuracy: ', svm.score(X_test_std, y_test))
+#
+## Decision Tree Learning
+#from sklearn.tree import DecisionTreeClassifier
+#tree = DecisionTreeClassifier(criterion='entropy', max_depth=4, random_state=0)
+#tree.fit(X_train, y_train)
+#
+#print('Decision Tree Learning')
+#print('Training accuracy: ', tree.score(X_train, y_train))
+#print('Test accuracy: ', tree.score(X_test, y_test))
+#
+#
+## Random Forest Classifier
+#forest = RandomForestClassifier(criterion='entropy',
+#                                n_estimators=10,
+#                                random_state=1,
+#                                n_jobs=-1)
+#forest.fit(X_train, y_train)                                
+#print('Random Forests')
+#print('Training accuracy: ', forest.score(X_train, y_train))
+#print('Test accuracy: ', forest.score(X_test, y_test))
+#
+## SGD classifier
+#from sklearn.linear_model import SGDClassifier
+#ppn = SGDClassifier(penalty='elasticnet', loss='perceptron', n_iter=100,
+#                    learning_rate='optimal', random_state=0, alpha=0.001)
+#ppn.fit(X_train_std, y_train)
+#print('Perceptron')
+#print('Training accuracy: ', ppn.score(X_train_std, y_train))
+#print('Test accuracy: ', ppn.score(X_test_std, y_test))
+#
+## Construct table to display test and training results. 
+#lrtrainscore = lr.score(X_train_std, y_train)
+#svmtrainscore = svm.score(X_train_std, y_train)
+#treetrainscore = tree.score(X_train_std, y_train)
+#foresttrainscore = forest.score(X_train_std, y_train)
+#ppntrainscore =  ppn.score(X_train_std, y_train)
+#
+#lrtestscore = lr.score(X_test_std, y_test)
+#svmtestscore = svm.score(X_test_std, y_test)
+#treetestscore = tree.score(X_test_std, y_test)
+#foresttestscore = forest.score(X_test_std, y_test)
+#ppntestscore =  ppn.score(X_test_std, y_test)
+#
+#algorithmdf = pd.DataFrame([
+#                    ['Logistic regression', round(lrtrainscore*100, 2), 
+#                     round(lrtestscore*100, 2)],
+#                    ['Support vector machine', round(svmtrainscore*100, 2), 
+#                     round(svmtestscore*100, 2)],
+#                    ['Decision tree', round(treetrainscore*100, 2), 
+#                     round(treetestscore*100, 2)],
+#                    ['Random Forests', round(foresttrainscore*100, 2), 
+#                     round(foresttestscore*100, 2)],
+#                    ['Perceptron', round(ppntrainscore*100, 2), 
+#                     round(ppntestscore*100, 2)]])   
+#
+#algorithmdf.columns = ['Algorithm name', 'Train score (%)', 'Test score (%)']
+#                       
+## Construct table of results
+#from pandas.tools.plotting import table
+#fig, ax = plt.subplots(figsize=(12, 2)) # set size frame
+#ax.xaxis.set_visible(False)  # hide the x axis
+#ax.yaxis.set_visible(False)  # hide the y axis
+#ax.set_frame_on(False)  # no visible frame, uncomment if size is ok
+#tabla = table(ax, algorithmdf, loc='upper right', 
+#              colWidths=[0.21]*len(algorithmdf.columns))  
+#tabla.auto_set_font_size(False) # Activate set fontsize manually
+#tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
+#tabla.scale(1.2, 1.2) # change size table
+##plt.savefig('performance_table.png')
+##plt.clf()
+#plt.show()
 
 ###################################
 # 5. PRINCIPAL COMPONENT ANALYSIS #
@@ -531,6 +531,10 @@ plt.show()
 # 7. K-FOLD STRATIFIED CROSS-VALIDATION #
 #########################################
 
+# Decide which dataset to use
+X_train_lda = X_train_std
+X_test_lda = X_test_std
+
 # Pipeline + stratified K fold module
 from sklearn.pipeline import Pipeline
 from sklearn.cross_validation import StratifiedKFold
@@ -622,11 +626,11 @@ from sklearn.learning_curve import validation_curve
 param_range = [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
 max_depth = [3, 4, 5, 6, 7, 8]
 n_estimators = [5, 10, 15, 20, 25, 30]
-train_scores, test_scores = validation_curve(estimator=LogisticRegression(),
+train_scores, test_scores = validation_curve(estimator=DecisionTreeClassifier(criterion='entropy'),
                                              X=X_train_lda,
                                              y=y_train,
-                                             param_name='C',
-                                             param_range=param_range,
+                                             param_name='max_depth',
+                                             param_range=max_depth,
                                              cv=10)
 train_mean = np.mean(train_scores, axis=1)
 train_std = np.std(train_scores, axis=1)
@@ -653,7 +657,7 @@ plt.xscale('log')
 plt.legend(loc='lower right')
 plt.xlabel('Parameter C')
 plt.ylabel('Accuracy')
-plt.ylim([0.7, 1.0])
+plt.ylim([0.5, 1.0])
 plt.show()         
 
 
@@ -738,15 +742,16 @@ plt.show()
 ###################################################
 # 9. FINE-TUNING HYPER-PARAMETERS VIA GRID SEARCH #
 ###################################################
-from sklearn.grid_search import GridSearchCV
-
+#from sklearn.grid_search import GridSearchCV
+#
 ## parameter grid
 #param_range = [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0]
 #param_grid = [{'C': param_range,
-#                   'penalty': ['l1']},
-#                   {'C': param_range,
-#                    'penalty': ['l2']}]
-#model = LogisticRegression()               
+#               'kernel': ['linear']},
+#              {'C': param_range,
+#               'kernel': ['rbf'],
+#               'gamma': param_range}]
+#model = SVC()               
 #gs = GridSearchCV(estimator=model,
 #                  param_grid=param_grid,
 #                  scoring='accuracy',
@@ -759,31 +764,31 @@ from sklearn.grid_search import GridSearchCV
 """
 Hyperparameter optimization via grid search
 SVC - gamma=0.01, C=10.0, kernel=rbf
-LogisticRegression - penalty=l2, C=0.01
+LogisticRegression - penalty=l2, C=0.1
 
 """
 
 # performance comparison following hyper-parameter tuning via grid-search.
-lr = LogisticRegression(penalty='l2', C=0.01, random_state=0)
+lr = LogisticRegression(penalty='l2', C=0.1, random_state=0)
 lr.fit(X_train_lda, y_train)
 lr_scores = cross_val_score(estimator=lr,
                             X=X_train_lda,
                             y=y_train,
-                            cv=15)
+                            cv=10)
 
-svm = SVC(kernel='rbf', gamma=0.01, C=10.0, random_state=0)
+svm = SVC(kernel='rbf', gamma=0.01, C=1000.0, random_state=0)
 svm.fit(X_train_lda, y_train)                         
 svm_scores = cross_val_score(estimator=svm,
                              X=X_train_lda,
                              y=y_train,
-                             cv=15)
+                             cv=10)
                          
 tree = DecisionTreeClassifier(criterion='entropy', max_depth=4, random_state=0)
 tree.fit(X_train_lda, y_train)
 tree_scores = cross_val_score(estimator=tree,
                               X=X_train_lda,
                               y=y_train,
-                              cv=15)
+                              cv=10)
                          
 forest = RandomForestClassifier(criterion='entropy',
                                 n_estimators=10,
@@ -794,7 +799,7 @@ forest.fit(X_train_lda, y_train)
 forest_scores = cross_val_score(estimator=forest,
                                 X=X_train_lda,
                                 y=y_train,
-                                cv=15)
+                                cv=10)
                                             
 ppn = SGDClassifier(penalty='elasticnet', loss='perceptron', n_iter=100,
                     learning_rate='optimal', random_state=0, alpha=0.001)
@@ -802,29 +807,85 @@ ppn.fit(X_train_lda, y_train)
 ppn_scores = cross_val_score(estimator=ppn,
                              X=X_train_lda,
                              y=y_train,
-                             cv=15)
-                                                 
+                             cv=10)
+                 
+
+###########################################
+# 10. ENSEMBLE LEARNING - MAJORITY VOTING #
+###########################################
+from MajorityVoteClassifier import MajorityVoteClassifier
+
+clf = [lr, svm, tree, forest, ppn]
+my_clf = MajorityVoteClassifier(classifiers=clf)
+clf = [lr, svm, tree, forest, ppn, my_clf]
+
+majority_scores = cross_val_score(estimator=my_clf,
+                                  X=X_train_lda,
+                                  y=y_train,
+                                  cv=10)
+
+###################################
+# 11. ENSEMBLE LEARNING - BAGGING #
+###################################
+n_estimators=10
+
+from sklearn.ensemble import BaggingClassifier
+bag = BaggingClassifier(base_estimator=svm,
+                        n_estimators=n_estimators,
+                        max_samples=1.0,
+                        max_features=1.0,
+                        bootstrap=True,
+                        bootstrap_features=False,
+                        random_state=1)
+                        
+SVM_bag_scores = cross_val_score(estimator=bag,
+                             X=X_train_lda,
+                             y=y_train,
+                             cv=10)     
+                             
+
+my_clf.fit(X_train_lda, y_train)                             
+bag.fit(X_train_lda, y_train)
+                             
 # table of cross-validated scores
 algorithmdf = pd.DataFrame([
                     ['Logistic regression', 
                      round(np.mean(lr_scores)*100, 2),
-                     round(np.std(lr_scores)*100, 2)],
+                     round(np.std(lr_scores)*100, 2),
+                     round(lr.score(X_test_lda, y_test)*100, 2)],
                     ['Support vector machine', 
                      round(np.mean(svm_scores)*100, 2),
-                     round(np.std(svm_scores)*100, 2)],
+                     round(np.std(svm_scores)*100, 2),
+                     round(svm.score(X_test_lda, y_test)*100, 2)],
                     ['Decision tree', 
                      round(np.mean(tree_scores)*100, 2),
-                     round(np.std(tree_scores)*100, 2)],
+                     round(np.std(tree_scores)*100, 2),
+                     round(tree.score(X_test_lda, y_test)*100, 2)],
                     ['Random Forests', 
                      round(np.mean(forest_scores)*100, 2),
-                     round(np.std(forest_scores)*100, 2)],
+                     round(np.std(forest_scores)*100, 2),
+                     round(forest.score(X_test_lda, y_test)*100, 2)],
                     ['Perceptron', 
                      round(np.mean(ppn_scores)*100, 2),
-                     round(np.std(ppn_scores)*100, 2)]])   
+                     round(np.std(ppn_scores)*100, 2),
+                     round(ppn.score(X_test_lda, y_test)*100, 2)],
+                    ['Majority Voting',
+                     round(np.mean(majority_scores)*100, 2),
+                     round(np.std(majority_scores)*100, 2),
+                     round(np.sum(my_clf.predict(X_test_lda) == y_test)/y_test.shape[0]*100, 2)],
+                    ['SVM Bagging',
+                     round(np.mean(SVM_bag_scores)*100, 2),
+                     round(np.std(SVM_bag_scores)*100, 2),
+                     round(np.sum(bag.predict(X_test_lda) == y_test)/y_test.shape[0]*100, 2)]])   
+
+
+#                    ['Tree Bagging',
+#                     round(np.mean(tree_bag_scores)*100, 2),
+#                     round(np.std(tree_bag_scores)*100, 2)],
 
 algorithmdf.columns = ['Algorithm name', 'Train score mean (%)', 
-                       'Train score sd (%)']
-                       
+                       'Train score sd (%)', 'Test score']
+
 # Construct table of results
 from pandas.tools.plotting import table
 fig, ax = plt.subplots(figsize=(12, 2)) # set size frame
@@ -836,17 +897,12 @@ tabla = table(ax, algorithmdf, loc='upper right',
 tabla.auto_set_font_size(False) # Activate set fontsize manually
 tabla.set_fontsize(12) # if ++fontsize is necessary ++colWidths
 tabla.scale(1.2, 1.2) # change size table
-plt.savefig('performance_table_grid_search.png')
-plt.clf()
-#plt.show()
+#plt.savefig('performance_table_grid_search.png')
+#plt.clf()
+plt.show()
 
-###########################################
-# 10. ENSEMBLE LEARNING - MAJORITY VOTING #
-###########################################
 
-###################################
-# 11. ENSEMBLE LEARNING - BAGGING #
-###################################
+
 
 #############################################
 # 12. ENSEMBLE LEARNING - ADAPTIVE BOOSTING #
