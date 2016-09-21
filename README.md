@@ -6,7 +6,19 @@ Summary
 
 Let us begin with the summary of results. The following plot shows the various algorithms that have been optimized for the task of predicting survival during the Titanic disaster.  
 
-![](?raw=true)
+![](https://github.com/FyzHsn/Titanic-disaster-prediction/blob/master/Figs/AlgorithmComparison.png?raw=true)  
+
+Based on this figure, the optimal prediction models are the support vector machine (SVM) algorithm for the parameters:  
+kernel - Radial basis function  
+gamma - 0.01  
+C = 1000.0   
+
+and the Majority Vote CLassifier (MVC) algorithm. Furthermore, I could tune the MVC to take into account probability of classification to yield better performance. It is likely that such a tuning would make this the best prediction model. Throughout all my experimentations with the algorithms, I have not been able to break beyond the mean prediction accuracy of 83% on the training set.
+
+The survivability is overwhelmingly determined by age and gender with passenger class being also of minor influence. Children, women and the upper class had higher survival rates.
+
+Introduction
+------------
 
 In this script, we predict the survivability in the Titanic disaster based on features such as gender, ticket class, family status etc. This is part of a kaggle competition.
 
