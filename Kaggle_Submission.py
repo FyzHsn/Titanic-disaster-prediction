@@ -7,11 +7,13 @@ Data: October 13, 2016
 """
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from pandas import read_csv
 from sklearn.preprocessing import Imputer
 from sklearn.svm import SVC
 from sklearn.lda import LDA
+from sklearn.learning_curve import learning_curve
 
 # load training and test datasets
 testlocation = r'C:\Users\Windows\Dropbox\AllStuff\Titanic_Kaggle\Data\test.csv'
@@ -62,7 +64,37 @@ X_train_std[:, 1] = (X_train[:, 1]-X_train[:, 1].mean())/X_train[:, 1].std()
 
 # Fit data using hyperparameter tuned svm algorithm
 svm = SVC(kernel='rbf', gamma=0.01, C=1000.0, random_state=0)
-svm.fit(X_train_std, y_train)                             
+svm.fit(X_train_std, y_train)          
+
+# diagnosing bias an variance problems with learning curves.
+train_sizes, train_scores, test_scores = \
+    learning_curve(estimator=svm,
+                   X=X_train_std,
+                   y=y_train,
+                   train_sizes=np.linspace(0.1, 1.0, 20),
+                   cv=10)
+train_mean = np.mean(train_scores, axis=1)
+train_std = np.std(train_scores, axis=1)
+test_mean = np.mean(test_scores, axis=1)
+test_std = np.std(test_scores, axis=1)
+plt.plot(train_sizes, train_mean, color='blue', marker='o',
+         markersize=5, label='training accuracy')
+plt.fill_between(train_sizes,
+                 train_mean + train_std,
+                 train_mean - train_std,
+                 alpha=0.15, color='blue')
+plt.plot(train_sizes, test_mean, color='red', marker='o',
+         markersize=5, label='test accuracy')
+plt.fill_between(train_sizes,
+                 test_mean + test_std,
+                 test_mean - test_std,
+                 alpha=0.15, color='red')
+plt.grid()
+plt.xlabel('Number of training samples')
+plt.ylabel('Accuracy')
+plt.legend(loc='lower right')
+plt.ylim([0.7, 1.0])
+plt.show()                   
 
 # predicted survival values for the test set
 y_pred = svm.predict(X_test_std)
